@@ -1,0 +1,100 @@
+{
+  "name": "haeuso-3d",
+  "version": "1.0.0",
+  "description": "해우소 3D — 파라메트릭 3D 모델링 도구",
+  "main": "main.js",
+  "author": "oopseong",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --mac --win --linux",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux",
+    "pack": "electron-builder --dir"
+  },
+  "devDependencies": {
+    "electron": "^43.1.1",
+    "electron-builder": "^26.15.3",
+    "three": "^0.160.0",
+    "three-bvh-csg": "^0.0.16",
+    "three-mesh-bvh": "^0.7.0"
+  },
+  "build": {
+    "appId": "com.oopseong.haeuso3d",
+    "productName": "Haeuso3D",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "vendor/**/*",
+      "build/icon.png"
+    ],
+    "fileAssociations": [
+      {
+        "ext": "haeuso",
+        "name": "해우소 3D 문서",
+        "description": "해우소 3D 작업 파일",
+        "role": "Editor",
+        "rank": "Owner",
+        "icon": "build/icon.png"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.graphics-design",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "identity": null,
+      "extendInfo": {
+        "CFBundleDisplayName": "해우소 3D"
+      }
+    },
+    "dmg": {
+      "title": "해우소 3D"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "해우소 3D"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Graphics",
+      "icon": "build/icon.png",
+      "desktop": {
+        "entry": {
+          "Name": "해우소 3D"
+        }
+      }
+    },
+    "afterPack": "build/afterPack.js"
+  }
+}

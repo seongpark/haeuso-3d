@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>해우소 3D — 파라메트릭 3D 모델링</title>
+<meta name="description" content="상자와 구에서 시작해 모디파이어를 쌓고, 면마다 칠하고, 모서리를 골라 둥글립니다. STL로 내보내 3D 프린터로. macOS용 무료 앱.">
+<meta name="theme-color" content="#0D1117" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F3F5F9" media="(prefers-color-scheme: light)">
+<link rel="icon" href="assets/icon.png" type="image/png">
+<meta property="og:title" content="해우소 3D — 파라메트릭 3D 모델링">
+<meta property="og:description" content="숫자를 만지면 형태가 바뀐다. macOS용 파라메트릭 3D 모델링 앱.">
+<meta property="og:image" content="assets/screenshot.webp">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="7.2" fill="var(--z)"/>
+      <g fill="none" stroke="#fff" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M16 6.6 24.4 11.3v9.4L16 25.4 7.6 20.7v-9.4z"/>
+        <path d="M7.6 11.3 16 16l8.4-4.7M16 16v9.4"/>
+      </g>
+    </svg>
+    <span class="wordmark">해우소 3D</span>
+    <span class="ver">1.0.0</span>
+    <span class="sp"></span>
+    <a href="#설치">설치</a>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-copy">
+      <p class="tag axis">파라메트릭 3D 모델링 · macOS</p>
+      <h1>숫자를 만지면<br>형태가 <span class="em">바뀐다</span></h1>
+      <p class="lede">
+        상자와 구에서 시작해 모디파이어를 쌓고, 면마다 칠하고,
+        모서리를 골라 둥글립니다. 만든 건 STL로 내보내
+        그대로 3D 프린터에 넘길 수 있습니다.
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="#설치">설치하기 <span class="sz">macOS · 116MB</span></a>
+        <a class="btn ghost" href="#기능">무엇이 들어있나</a>
+      </div>
+    </div>
+    <div class="stage">
+      <canvas id="wire" aria-label="별 프리즘 와이어프레임이 천천히 회전하는 그림"></canvas>
+      <p class="cap"><span class="dot"></span>선택한 모서리</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="head">
+      <p class="tag">작업 화면</p>
+      <h2>왼쪽에 도형, 가운데 뷰포트,<br>오른쪽에 그 도형의 모든 숫자</h2>
+    </div>
+    <figure>
+      <div class="shot">
+        <img src="assets/screenshot.webp" width="1500" height="851" loading="lazy" decoding="async"
+             alt="해우소 3D 작업 화면. 왼쪽에 도구 막대와 씬 목록, 가운데 3D 뷰포트에 분홍색 꽃 모양 도형, 오른쪽에 재질과 파라미터 패널이 있다.">
+      </div>
+      <figcaption>고른 도형의 파라미터가 오른쪽에 전부 펼쳐집니다. 슬라이더를 끌면 형태가 즉시 다시 만들어집니다.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="tag">작업 순서</p>
+      <h2>쌓고, 칠하고, 내보낸다</h2>
+      <p>앞 단계를 지우지 않고 계속 되돌아가 고칠 수 있습니다. 도형은 마지막까지 숫자로 남아 있습니다.</p>
+    </div>
+    <ol class="flow">
+      <li class="step">
+        <span class="n">1 — 도형</span>
+        <h3>기본 도형에서 시작</h3>
+        <p>상자·구·원기둥·원뿔·토러스·캡슐. 여기에 꽃, 기어, 별 프리즘 같은 파라메트릭 도형이 더 있습니다.</p>
+      </li>
+      <li class="step">
+        <span class="n">2 — 모디파이어</span>
+        <h3>스택으로 변형</h3>
+        <p>비틀기·구부리기·테이퍼·물결·노이즈·꽃잎화를 겹쳐 쌓습니다. 순서를 바꾸면 결과가 달라집니다.</p>
+      </li>
+      <li class="step">
+        <span class="n">3 — 재질</span>
+        <h3>면마다 따로 칠하기</h3>
+        <p>윗면만 사진을 넣고 옆면은 색으로. 뷰포트에서 면을 직접 클릭해 고를 수 있습니다.</p>
+      </li>
+      <li class="step">
+        <span class="n">4 — 출력</span>
+        <h3>STL로 내보내기</h3>
+        <p>보이는 도형을 하나로 묶어 STL로 저장합니다. 슬라이서에 그대로 넣으면 됩니다.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="기능">
+    <div class="head">
+      <p class="tag">들어있는 것</p>
+      <h2>모서리 하나를 집어서<br>그것만 둥글리기</h2>
+      <p>조건에 맞는 모서리를 전부 둥글릴 수도, 뷰포트에서 클릭해 고른 모서리만 둥글릴 수도 있습니다. 평평한 면은 건드리지 않습니다.</p>
+    </div>
+    <div class="spec">
+      <article class="item">
+        <span class="k">FILLET</span>
+        <h3>모서리 둥글기</h3>
+        <p>반경이 곧 둥근 정도가 됩니다. 모서리를 클릭하면 분할로 쪼개진 조각이 아니라 코너에서 코너까지 한 줄이 통째로 잡힙니다.</p>
+        <div class="params">
+          <span class="chip hi">반경</span><span class="chip">강도</span>
+          <span class="chip">감지 각도</span><span class="chip">세분화</span>
+        </div>
+      </article>
+      <article class="item">
+        <span class="k">MATERIAL</span>
+        <h3>면별 재질</h3>
+        <p>도형이 스스로 몇 개의 면으로 나뉘는지 알고 있습니다. 면마다 색과 이미지를 따로 지정합니다.</p>
+        <div class="faces">
+          <span class="face"><i class="sw x"></i>상자 6면</span>
+          <span class="face"><i class="sw y"></i>별·꽃 3면</span>
+          <span class="face"><i class="sw z"></i>원기둥 3면</span>
+        </div>
+      </article>
+      <article class="item">
+        <span class="k">TEXTURE</span>
+        <h3>텍스처</h3>
+        <p>이미지를 넣으면 도형 크기에 맞게 한 장이 딱 들어갑니다. 일부러 타일처럼 반복하고 싶을 때만 반복 값을 올리면 됩니다.</p>
+        <div class="params">
+          <span class="chip">반복 X·Y</span><span class="chip">오프셋</span>
+          <span class="chip">회전</span><span class="chip">거칠기</span><span class="chip">금속감</span>
+        </div>
+      </article>
+      <article class="item">
+        <span class="k">BOOLEAN</span>
+        <h3>불리언 · 조각</h3>
+        <p>두 도형을 합치고, 빼고, 겹친 부분만 남깁니다. 브러시로 정점을 직접 밀어 다듬을 수도 있습니다.</p>
+        <div class="params">
+          <span class="chip">합치기</span><span class="chip">빼기</span>
+          <span class="chip">교차</span><span class="chip">조각 브러시</span>
+        </div>
+      </article>
+      <article class="item">
+        <span class="k">FILE</span>
+        <h3>.haeuso 파일</h3>
+        <p>작업을 통째로 저장합니다. 더블클릭하면 앱이 열리고, 저장하지 않은 변경이 있으면 닫기 전에 물어봅니다.</p>
+        <div class="params">
+          <span class="chip">되돌리기 80단계</span><span class="chip">STL 내보내기</span>
+        </div>
+      </article>
+      <article class="item">
+        <span class="k">OFFLINE</span>
+        <h3>인터넷 없이</h3>
+        <p>필요한 건 전부 앱 안에 들어 있습니다. 비행기 안에서도 켜자마자 그대로 씁니다.</p>
+        <div class="params">
+          <span class="chip">계정 없음</span><span class="chip">서버 없음</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="설치">
+    <div class="head">
+      <p class="tag">설치</p>
+      <h2>내려받아 끌어다 놓기</h2>
+    </div>
+    <div class="install">
+      <div class="panel">
+        <div class="files">
+          <a class="file" href="https://github.com/seongpark/haeuso-3d/releases/download/v1.0.0/Haeuso3D-1.0.0-arm64.dmg">
+            <span class="nm">Haeuso3D-1.0.0-arm64.dmg</span><span class="sp"></span><span class="mb">116 MB</span>
+          </a>
+          <a class="file" href="https://github.com/seongpark/haeuso-3d/releases/download/v1.0.0/Haeuso3D-1.0.0.dmg">
+            <span class="nm">Haeuso3D-1.0.0.dmg</span><span class="sp"></span><span class="mb">120 MB</span>
+          </a>
+        </div>
+        <p class="note">
+          위가 <b>Apple Silicon</b>(M1 이후), 아래가 <b>Intel</b> 맥용입니다.
+          받은 dmg를 열고 앱을 응용 프로그램 폴더로 끌어다 놓으면 끝입니다.
+        </p>
+      </div>
+      <div class="panel">
+        <h3>처음 열 때</h3>
+        <p class="note">
+          개인이 만든 앱이라 애플 공증을 받지 않았습니다. 그냥 더블클릭하면
+          <b>“확인되지 않은 개발자”</b> 경고가 뜹니다.
+          앱을 <kbd>우클릭</kbd> 한 다음 <b>열기</b>를 고르면 한 번만 확인하고,
+          그 뒤로는 평소처럼 열립니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap bar">
+    <span>해우소 3D · 개인 프로젝트</span>
+    <span class="sp"></span>
+    <span class="axes">
+      <span class="ax"><i class="sw x"></i>X</span>
+      <span class="ax"><i class="sw y"></i>Y</span>
+      <span class="ax"><i class="sw z"></i>Z</span>
+    </span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

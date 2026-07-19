@@ -1,0 +1,197 @@
+@font-face{
+  font-family:'Pretendard v';
+  src:url('assets/pretendard-subset.woff2') format('woff2-variations');
+  font-weight:400 800; font-style:normal; font-display:swap;
+}
+
+/* ── 토큰 ─────────────────────────────────────────────
+   뷰포트에서 가져온 팔레트. 파랑은 앱의 강조색이자 Z축,
+   분홍은 앱에서 '선택된 모서리'를 칠하는 바로 그 색이다.
+   컴포넌트는 항상 토큰만 참조하고, 테마는 토큰만 갈아끼운다. */
+:root{
+  --ground:#F3F5F9; --surface:#FFFFFF; --sunk:#EAEEF5;
+  --line:#DDE4EE; --line-soft:#E9EDF4;
+  --ink:#101722; --muted:#59647A;
+  --z:#1F6FEB; --z-soft:#E4EDFD;
+  --sel:#E1467C; --x:#D8394A; --y:#1BA55B;
+  --grid:#0d17280f;
+  --shadow:0 1px 2px #0f172a0d, 0 12px 32px -12px #0f172a26;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:"Pretendard v",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ground:#0D1117; --surface:#151B25; --sunk:#10161F;
+    --line:#222B38; --line-soft:#1B222D;
+    --ink:#E9EDF4; --muted:#8A94A6;
+    --z:#4C8DFF; --z-soft:#12203A;
+    --sel:#FF6B9D; --x:#F04452; --y:#22C55E;
+    --grid:#93b4ff12;
+    --shadow:0 1px 2px #0006, 0 18px 44px -16px #000a;
+  }
+}
+/* 뷰어의 테마 토글이 OS 설정을 양방향으로 이겨야 한다 */
+:root[data-theme="light"]{
+  --ground:#F3F5F9; --surface:#FFFFFF; --sunk:#EAEEF5;
+  --line:#DDE4EE; --line-soft:#E9EDF4;
+  --ink:#101722; --muted:#59647A;
+  --z:#1F6FEB; --z-soft:#E4EDFD;
+  --sel:#E1467C; --x:#D8394A; --y:#1BA55B;
+  --grid:#0d17280f;
+  --shadow:0 1px 2px #0f172a0d, 0 12px 32px -12px #0f172a26;
+}
+:root[data-theme="dark"]{
+  --ground:#0D1117; --surface:#151B25; --sunk:#10161F;
+  --line:#222B38; --line-soft:#1B222D;
+  --ink:#E9EDF4; --muted:#8A94A6;
+  --z:#4C8DFF; --z-soft:#12203A;
+  --sel:#FF6B9D; --x:#F04452; --y:#22C55E;
+  --grid:#93b4ff12;
+  --shadow:0 1px 2px #0006, 0 18px 44px -16px #000a;
+}
+
+*{box-sizing:border-box; margin:0; padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-weight:420; line-height:1.7;
+  -webkit-font-smoothing:antialiased; letter-spacing:-.011em;
+}
+img{max-width:100%}
+
+/* 뷰포트 그리드 — 앱의 GridHelper를 페이지 바닥에 깔았다 */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 65% at 50% 0%,#000 30%,transparent 78%);
+  mask-image:radial-gradient(ellipse 90% 65% at 50% 0%,#000 30%,transparent 78%);
+}
+.wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 28px}
+
+/* ── 타이포 스케일 ── */
+h1,h2,h3{text-wrap:balance; letter-spacing:-.035em; line-height:1.14; font-weight:800}
+h1{font-size:clamp(2.5rem,6.4vw,4.4rem)}
+h2{font-size:clamp(1.65rem,3.4vw,2.35rem); letter-spacing:-.032em}
+h3{font-size:1.06rem; letter-spacing:-.02em; font-weight:700; line-height:1.45}
+.lede{font-size:clamp(1.02rem,1.65vw,1.19rem); color:var(--muted); max-width:38ch; line-height:1.72}
+
+/* 라벨 — 스펙시트 목소리 */
+.tag{
+  font-family:var(--mono); font-size:.688rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); font-weight:500; display:flex; align-items:center; gap:.6em;
+}
+.tag::before{content:""; width:1.9em; height:1px; background:var(--line); flex:none}
+.tag.axis::before{background:var(--z); width:2.4em; height:2px}
+
+/* 축 색 스와치 */
+.sw{width:9px; height:9px; border-radius:2px; flex:none; display:inline-block}
+.sw.x{background:var(--x)} .sw.y{background:var(--y)} .sw.z{background:var(--z)}
+
+/* ── 헤더 / 푸터 공용 바 ── */
+.bar{display:flex; align-items:center; gap:12px}
+header{position:relative; z-index:2}
+header .bar{padding-top:26px}
+.mark{width:29px; height:29px; flex:none; border-radius:7px; display:block}
+.wordmark{font-weight:800; letter-spacing:-.035em; font-size:1.06rem}
+.ver{font-family:var(--mono); font-size:.7rem; color:var(--muted); padding:2px 7px;
+  border:1px solid var(--line); border-radius:4px; letter-spacing:.02em}
+.bar .sp{flex:1}
+.bar a{color:var(--muted); text-decoration:none; font-size:.875rem; font-weight:600}
+.bar a:hover{color:var(--ink)}
+
+/* ── 히어로 ── */
+.hero{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.92fr); gap:52px;
+  align-items:center; padding:70px 0 76px}
+.hero-copy{display:flex; flex-direction:column; gap:26px; align-items:flex-start}
+h1 .em{color:var(--z)}
+.cta-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.btn{
+  font:inherit; font-weight:700; font-size:.925rem; letter-spacing:-.015em;
+  padding:12px 20px; border-radius:5px; border:1px solid transparent;
+  text-decoration:none; display:inline-flex; align-items:center; gap:9px;
+  background:var(--z); color:#fff; transition:transform .12s ease, filter .12s ease;
+}
+.btn:hover{filter:brightness(1.08); transform:translateY(-1px)}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--z); color:var(--z); filter:none}
+.btn .sz{font-family:var(--mono); font-size:.75rem; opacity:.72; font-weight:500}
+a:focus-visible{outline:2px solid var(--z); outline-offset:3px; border-radius:4px}
+
+.stage{position:relative; aspect-ratio:1/.94; min-height:300px}
+.stage canvas{display:block; width:100%; height:100%}
+.stage .cap{
+  position:absolute; left:0; bottom:0; font-family:var(--mono); font-size:.7rem;
+  color:var(--muted); letter-spacing:.02em; display:flex; align-items:center; gap:7px;
+}
+.dot{width:7px; height:7px; border-radius:50%; background:var(--sel); flex:none}
+
+/* ── 섹션 ── */
+section{padding:60px 0; border-top:1px solid var(--line-soft)}
+.head{display:flex; flex-direction:column; gap:14px; margin-bottom:36px; max-width:52ch}
+.head p:not(.tag){color:var(--muted)}
+
+figure{display:flex; flex-direction:column; gap:14px}
+.shot{border:1px solid var(--line); border-radius:8px; overflow:hidden;
+  background:var(--surface); box-shadow:var(--shadow); line-height:0}
+.shot img{width:100%; height:auto; display:block}
+figcaption{font-size:.85rem; color:var(--muted)}
+
+/* 파이프라인 — 실제로 순서가 있는 작업이라 번호를 매긴다 */
+.flow{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+  border:1px solid var(--line); border-radius:8px; overflow:hidden; list-style:none}
+.step{background:var(--surface); padding:22px 20px 24px; display:flex; flex-direction:column; gap:9px; min-width:0}
+.step .n{font-family:var(--mono); font-size:.72rem; color:var(--z); font-weight:600; letter-spacing:.06em}
+.step p{font-size:.875rem; color:var(--muted); line-height:1.62}
+
+/* 스펙 목록 */
+.spec{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line);
+  border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.item{background:var(--surface); padding:24px; display:flex; flex-direction:column; gap:10px; min-width:0}
+.item .k{font-family:var(--mono); font-size:.72rem; color:var(--muted); letter-spacing:.06em}
+.item p{font-size:.9rem; color:var(--muted); line-height:1.68}
+.params{display:flex; flex-wrap:wrap; gap:6px; margin-top:2px}
+.chip{font-family:var(--mono); font-size:.7rem; padding:3px 8px; border-radius:4px;
+  background:var(--sunk); color:var(--muted); border:1px solid var(--line-soft);
+  font-variant-numeric:tabular-nums}
+.chip.hi{color:var(--z); border-color:var(--z); background:var(--z-soft)}
+.faces{display:flex; gap:6px; flex-wrap:wrap}
+.face{font-family:var(--mono); font-size:.7rem; padding:3px 9px; border-radius:4px;
+  border:1px solid var(--line); color:var(--muted); display:flex; align-items:center; gap:6px}
+
+/* 설치 */
+.install{display:grid; grid-template-columns:1.15fr 1fr; gap:1px; background:var(--line);
+  border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.panel{background:var(--surface); padding:26px; display:flex; flex-direction:column; gap:16px; min-width:0}
+.files{display:flex; flex-direction:column; gap:8px}
+.file{display:flex; align-items:baseline; gap:10px; font-family:var(--mono); font-size:.79rem;
+  padding:11px 13px; border:1px solid var(--line); border-radius:5px; background:var(--sunk);
+  font-variant-numeric:tabular-nums; overflow-x:auto; text-decoration:none;
+  transition:border-color .12s ease, background .12s ease}
+.file:hover{border-color:var(--z); background:var(--z-soft)}
+.file:hover .nm{color:var(--z)}
+.file .nm{color:var(--ink); font-weight:500; white-space:nowrap}
+.file .sp{flex:1}
+.file .mb{color:var(--muted); white-space:nowrap}
+.note{font-size:.85rem; color:var(--muted); line-height:1.7}
+.note b{color:var(--ink); font-weight:650}
+kbd{font-family:var(--mono); font-size:.78em; border:1px solid var(--line); border-bottom-width:2px;
+  border-radius:4px; padding:1px 5px; color:var(--ink); background:var(--sunk)}
+
+footer{padding:40px 0 64px; border-top:1px solid var(--line-soft);
+  font-size:.83rem; color:var(--muted)}
+footer .bar{align-items:baseline}
+.axes{display:flex; gap:12px; font-family:var(--mono); font-size:.72rem}
+.ax{display:flex; align-items:center; gap:5px}
+
+@media (max-width:880px){
+  .hero{grid-template-columns:1fr; gap:34px; padding:44px 0 56px}
+  .stage{order:-1; aspect-ratio:1/.78; min-height:250px}
+  .flow,.spec,.install{grid-template-columns:1fr}
+  .lede{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.01ms !important; transition-duration:.01ms !important}
+}

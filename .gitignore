@@ -1,0 +1,11 @@
+# 의존성 — npm install 로 복원
+node_modules/
+
+# 빌드 산출물 — dmg는 Release로 배포
+dist/
+
+# 로컬 도구 설정
+.claude/
+
+# macOS
+.DS_Store
