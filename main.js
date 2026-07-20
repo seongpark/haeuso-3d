@@ -137,6 +137,7 @@ function buildMenu() {
         { label: '다른 이름으로 저장…', accelerator: 'Shift+CmdOrCtrl+S', click: () => send('saveAs') },
         { type: 'separator' },
         { label: 'STL 내보내기… (3D 프린팅)', accelerator: 'CmdOrCtrl+E', click: () => send('stl') },
+        { label: 'PNG로 내보내기… (배경 투명)', accelerator: 'Shift+CmdOrCtrl+E', click: () => send('png') },
         ...(mac ? [] : [{ type: 'separator' }, { role: 'quit', label: '종료' }]),
       ],
     },
@@ -212,6 +213,22 @@ ipcMain.handle('file:exportSTL', async (_e, { text, name }) => {
   if (r.canceled) return { canceled: true };
   try {
     await fs.writeFile(r.filePath, text, 'utf8');
+    return { canceled: false, path: r.filePath };
+  } catch (err) {
+    dialog.showErrorBox('내보내기 실패', String(err.message || err));
+    return { canceled: true, error: true };
+  }
+});
+
+ipcMain.handle('file:exportPNG', async (_e, { dataUrl, name }) => {
+  const r = await dialog.showSaveDialog(win, {
+    title: 'PNG로 내보내기', defaultPath: name || 'model.png',
+    filters: [{ name: 'PNG 이미지', extensions: ['png'] }],
+  });
+  if (r.canceled) return { canceled: true };
+  try {
+    const base64 = String(dataUrl || '').replace(/^data:image\/png;base64,/, '');
+    await fs.writeFile(r.filePath, Buffer.from(base64, 'base64'));
     return { canceled: false, path: r.filePath };
   } catch (err) {
     dialog.showErrorBox('내보내기 실패', String(err.message || err));

@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld('haeuso', {
   save: (text, filePath, asNew) => ipcRenderer.invoke('file:save', { text, filePath, asNew: !!asNew }),
   open: () => ipcRenderer.invoke('file:open'),
   exportSTL: (text, name) => ipcRenderer.invoke('file:exportSTL', { text, name }),
+  exportPNG: (dataUrl, name) => ipcRenderer.invoke('file:exportPNG', { dataUrl, name }),
   confirmDiscard: () => ipcRenderer.invoke('confirm:discard'),
 
   setTitle: (filePath, dirty) => ipcRenderer.send('title:set', { filePath, dirty }),
