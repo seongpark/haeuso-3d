@@ -16,13 +16,25 @@
   :root{
     --bg:#F2F4F6; --card:#FFFFFF; --line:#E5E8EB; --line2:#EEF1F3;
     --text:#191F28; --sub:#4E5968; --dim:#8B95A1;
-    --blue:#3182F6; --blue-d:#1B64DA; --blue-soft:#E8F1FE;
+    --blue:#3182F6; --blue-d:#1B64DA; --blue-soft:#E8F1FE; --blue-soft2:#DCEAFE;
     --pink:#FF6B9D; --red:#F04452; --green:#22C55E;
-    --chip:#F2F4F6;
+    --chip:#F2F4F6; --chip-hover:#E8EBED; --card-a:rgba(255,255,255,.8);
+    --invert-bg:#191F28; --invert-fg:#FFFFFF;
     --sh-s:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.03);
     --sh-m:0 4px 16px rgba(0,0,0,.06);
     --sh-l:0 8px 32px rgba(0,0,0,.12);
     --r:16px;
+  }
+  :root[data-theme="dark"]{
+    --bg:#15181D; --card:#1E2229; --line:#2B3038; --line2:#262B32;
+    --text:#EAEDF1; --sub:#B4BCC6; --dim:#7C8592;
+    --blue:#4C8DFF; --blue-d:#78ACFF; --blue-soft:#1B2A44; --blue-soft2:#22365A;
+    --pink:#FF7FAE; --red:#FF6B76; --green:#3DDC84;
+    --chip:#262B33; --chip-hover:#31373F; --card-a:rgba(30,34,41,.78);
+    --invert-bg:#EAEDF1; --invert-fg:#15181D;
+    --sh-s:0 1px 3px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.25);
+    --sh-m:0 4px 16px rgba(0,0,0,.45);
+    --sh-l:0 8px 32px rgba(0,0,0,.55);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
@@ -48,7 +60,7 @@
   .btn{background:var(--chip); border:none; color:var(--sub); padding:9px 14px; border-radius:12px;
     font-size:13.5px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:7px;
     transition:.15s; letter-spacing:-.2px; font-family:inherit}
-  .btn:hover{background:#E8EBED; color:var(--text)}
+  .btn:hover{background:var(--chip-hover); color:var(--text)}
   .btn.on{background:var(--blue); color:#fff}
   .btn.on:hover{background:var(--blue-d)}
   .btn svg{width:18px;height:18px}
@@ -56,7 +68,7 @@
   .seg button{background:transparent;border:none;color:var(--dim);padding:6px 12px;cursor:pointer;font-size:13px;
     font-weight:700;border-radius:9px;display:flex;align-items:center;gap:6px;font-family:inherit;letter-spacing:-.2px}
   .seg button svg{width:17px;height:17px}
-  .seg button.active{background:#fff;color:var(--blue);box-shadow:var(--sh-s)}
+  .seg button.active{background:var(--card);color:var(--blue);box-shadow:var(--sh-s)}
   .vline{width:1px;height:26px;background:var(--line)}
 
   /* Left rail */
@@ -67,7 +79,7 @@
     cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;position:relative}
   .tool:hover{background:var(--blue-soft);color:var(--blue);transform:translateY(-1px)}
   .tool svg{width:23px;height:23px}
-  .tool .tip{position:absolute;left:56px;background:var(--text);color:#fff;padding:6px 11px;border-radius:9px;
+  .tool .tip{position:absolute;left:56px;background:var(--invert-bg);color:var(--invert-fg);padding:6px 11px;border-radius:9px;
     font-size:12px;font-weight:600;white-space:nowrap;opacity:0;pointer-events:none;transition:.15s;z-index:30;box-shadow:var(--sh-m)}
   .tool:hover .tip{opacity:1}
   .rsep{width:34px;height:1px;background:var(--line);margin:4px 0}
@@ -85,18 +97,18 @@
   .obj-item .oic svg{width:19px;height:19px}
   .obj-item .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.2px}
   .obj-item .vis{opacity:.55;padding:3px;border-radius:6px}
-  .obj-item .vis:hover{background:rgba(0,0,0,.06);opacity:1}
+  .obj-item .vis:hover{background:var(--chip-hover);opacity:1}
   .empty{color:var(--dim);font-size:13px;text-align:center;padding:36px 18px;line-height:1.7;font-weight:600}
 
   /* Viewport */
   #viewport{grid-column:3;grid-row:2;position:relative;overflow:hidden}
   #canvas{display:block;width:100%;height:100%}
   #vpover{position:absolute;left:14px;bottom:14px;font-size:12px;color:var(--sub);font-weight:600;
-    background:rgba(255,255,255,.8);padding:9px 13px;border-radius:12px;backdrop-filter:blur(8px);
+    background:var(--card-a);padding:9px 13px;border-radius:12px;backdrop-filter:blur(8px);
     line-height:1.7;box-shadow:var(--sh-s);letter-spacing:-.2px}
   #vpover b{color:var(--text)}
   .kbd{background:var(--chip);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:11px;font-weight:700;color:var(--sub)}
-  #sculptbar,#edgebar{position:absolute;top:14px;left:50%;transform:translateX(-50%);background:#fff;
+  #sculptbar,#edgebar{position:absolute;top:14px;left:50%;transform:translateX(-50%);background:var(--card);
     border-radius:16px;box-shadow:var(--sh-l);padding:12px 16px;display:none;gap:16px;align-items:center;z-index:15}
   #sculptbar.show,#edgebar.show{display:flex}
   #edgebar .title svg{color:var(--blue)}
@@ -124,12 +136,12 @@
   .vec{display:flex;gap:6px;flex:1}
   .fld{background:var(--chip);border:1.5px solid transparent;color:var(--text);border-radius:10px;
     padding:8px 9px;font-size:13px;font-weight:600;font-family:inherit;width:100%;transition:.12s;-moz-appearance:textfield}
-  .fld:focus{outline:none;border-color:var(--blue);background:#fff}
+  .fld:focus{outline:none;border-color:var(--blue);background:var(--card)}
   input[type=number].fld::-webkit-inner-spin-button{opacity:.3}
   .slider-row{margin:13px 0}
   .slider-row .lab{display:flex;justify-content:space-between;font-size:12.5px;color:var(--sub);margin-bottom:8px;font-weight:600;letter-spacing:-.2px}
   .slider-row .lab b{color:var(--blue);font-weight:800}
-  .valfld{width:60px;background:#fff;border:1.5px solid var(--line);border-radius:8px;color:var(--blue);
+  .valfld{width:60px;background:var(--card);border:1.5px solid var(--line);border-radius:8px;color:var(--blue);
     font-weight:800;font-size:12px;text-align:right;padding:3px 7px;font-family:inherit;-moz-appearance:textfield;appearance:textfield;transition:.12s}
   .valfld:focus{outline:none;border-color:var(--blue);background:var(--blue-soft)}
   .valfld::-webkit-inner-spin-button,.valfld::-webkit-outer-spin-button{opacity:.25}
@@ -141,16 +153,16 @@
   select.fld{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238B95A1' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
   .mod-item{background:var(--chip);border-radius:14px;padding:12px 13px;margin:9px 0}
   .mod-head{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;letter-spacing:-.2px}
-  .mod-head .mic{width:26px;height:26px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--blue)}
+  .mod-head .mic{width:26px;height:26px;border-radius:8px;background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--blue)}
   .mod-head .mic svg{width:16px;height:16px}
   .mod-head .sp{flex:1}
   .mini{background:none;border:none;color:var(--dim);cursor:pointer;padding:4px;border-radius:7px;display:flex}
-  .mini:hover{color:var(--text);background:rgba(0,0,0,.05)}
+  .mini:hover{color:var(--text);background:var(--chip-hover)}
   .mini svg{width:16px;height:16px}
   .mini.on{color:var(--blue)}
   .addbtn{width:100%;background:var(--blue-soft);border:none;color:var(--blue);padding:12px;border-radius:12px;
     cursor:pointer;font-size:13.5px;font-weight:700;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit}
-  .addbtn:hover{background:#DCEAFE}
+  .addbtn:hover{background:var(--blue-soft2)}
   .addbtn svg{width:18px;height:18px}
   .no-sel{color:var(--dim);font-size:14px;text-align:center;padding:56px 24px;line-height:1.8;font-weight:600}
   .no-sel .big{width:56px;height:56px;margin:0 auto 14px;border-radius:18px;background:var(--chip);
@@ -171,34 +183,34 @@
   .ftabs{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 12px}
   .ftab{background:var(--chip);border:1.5px solid transparent;border-radius:10px;padding:6px 9px;font-size:12px;
     font-weight:700;color:var(--sub);cursor:pointer;display:flex;align-items:center;gap:6px;letter-spacing:-.2px;transition:.12s}
-  .ftab:hover{background:#E8EBED}
+  .ftab:hover{background:var(--chip-hover)}
   .ftab.on{background:var(--blue-soft);border-color:var(--blue);color:var(--blue)}
   .ftab .sw{width:13px;height:13px;border-radius:4px;border:1px solid rgba(0,0,0,.12);flex-shrink:0;background-size:cover;background-position:center}
   .hint{font-size:11.5px;color:var(--dim);font-weight:600;line-height:1.6;margin:2px 0 10px;letter-spacing:-.2px}
 
   /* Modal */
   .modal{position:fixed;inset:0;background:rgba(17,23,31,.4);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
-  .modal .box{background:#fff;border-radius:24px;padding:24px;box-shadow:var(--sh-l);max-width:520px;width:92%}
+  .modal .box{background:var(--card);border-radius:24px;padding:24px;box-shadow:var(--sh-l);max-width:520px;width:92%}
   .modal h3{font-size:19px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px}
   .modal .desc{font-size:13.5px;color:var(--dim);font-weight:600;margin-bottom:18px}
   .grid-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   .pcard{background:var(--chip);border-radius:16px;padding:14px 8px;cursor:pointer;text-align:center;transition:.15s;border:2px solid transparent}
-  .pcard:hover{border-color:var(--blue);background:#fff;box-shadow:var(--sh-m);transform:translateY(-2px)}
-  .pcard .pic{width:44px;height:44px;margin:0 auto 8px;border-radius:13px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-s)}
+  .pcard:hover{border-color:var(--blue);background:var(--card);box-shadow:var(--sh-m);transform:translateY(-2px)}
+  .pcard .pic{width:44px;height:44px;margin:0 auto 8px;border-radius:13px;background:var(--card);display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-s)}
   .pcard .pic svg{width:26px;height:26px}
   .pcard .pnm{font-size:12.5px;font-weight:700;color:var(--text);letter-spacing:-.2px}
   .grid-mods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .mcard{background:var(--chip);border-radius:14px;padding:14px 8px;cursor:pointer;text-align:center;transition:.15s;border:2px solid transparent}
-  .mcard:hover{border-color:var(--blue);background:#fff;transform:translateY(-2px)}
+  .mcard:hover{border-color:var(--blue);background:var(--card);transform:translateY(-2px)}
   .mcard svg{width:22px;height:22px;color:var(--blue);margin-bottom:6px}
   .mcard div{font-size:12px;font-weight:700;color:var(--text)}
 
-  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:#fff;
+  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--invert-bg);color:var(--invert-fg);
     padding:13px 22px;border-radius:14px;font-size:14px;font-weight:700;opacity:0;transition:.25s;pointer-events:none;z-index:300;box-shadow:var(--sh-l);letter-spacing:-.2px}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   ::-webkit-scrollbar{width:10px;height:10px}
-  ::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px;border:3px solid #fff}
-  ::-webkit-scrollbar-thumb:hover{background:#D1D6DB}
+  ::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px;border:3px solid var(--card)}
+  ::-webkit-scrollbar-thumb:hover{background:var(--chip-hover)}
 </style>
 <script type="importmap">
 {
@@ -228,6 +240,8 @@
     <div class="vline"></div>
     <button class="btn" id="snapBtn" data-ic="grid">스냅</button>
     <button class="btn" id="wireBtn" data-ic="wire">와이어</button>
+    <div class="vline"></div>
+    <button class="btn" id="themeBtn" title="다크 모드 전환"></button>
     <div class="vline"></div>
     <button class="btn" id="saveBtn" data-ic="save" title="작업 저장 (.haeuso)">저장</button>
     <button class="btn" id="loadBtn" data-ic="folder" title="불러오기 (.haeuso)"></button>
@@ -321,6 +335,8 @@ const ICONS = {
   folder:'<path d="M3.5 6.5A1.5 1.5 0 0 1 5 5h3.6l2 2.6H19a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 19 18.6H5a1.5 1.5 0 0 1-1.5-1.5z"/>',
   download:'<path d="M12 3.5v11M7.5 10 12 14.5 16.5 10M4.5 20.5h15"/>',
   image:'<rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.3" cy="9.5" r="1.7"/><path d="M3 16.5l5-5 4 4 3.5-3.5 5.5 5.5"/>',
+  moon:'<path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11z"/>',
+  sun:'<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.5M12 19v2.5M4.5 4.5l1.8 1.8M17.7 17.7l1.8 1.8M2.5 12H5M19 12h2.5M4.5 19.5l1.8-1.8M17.7 6.3l1.8-1.8"/>',
   eye:'<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
   eyeoff:'<path d="M9.5 5.9A9.6 9.6 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a15 15 0 0 1-2.4 3M6.5 7.2A14.8 14.8 0 0 0 2.5 12S6 18.5 12 18.5a9.4 9.4 0 0 0 3.6-.7M4 4l16 16M10 10a3 3 0 0 0 4 4"/>',
   plus:'<path d="M12 5v14M5 12h14"/>',
@@ -384,9 +400,16 @@ const dd=55; key.shadow.camera.left=-dd;key.shadow.camera.right=dd;key.shadow.ca
 scene.add(key);
 const fill=new THREE.DirectionalLight(0xdfeaff,0.55); fill.position.set(-18,14,-16); scene.add(fill);
 
-const grid=new THREE.GridHelper(140,70,0xC9D1DA,0xE1E6EB); grid.position.y=0; scene.add(grid);
+function buildGrid(dark){ const g=new THREE.GridHelper(140,70,dark?0x3A4048:0xC9D1DA,dark?0x262B32:0xE1E6EB); g.position.y=0; return g; }
+let grid=buildGrid(false); scene.add(grid);
 const ground=new THREE.Mesh(new THREE.PlaneGeometry(500,500),new THREE.ShadowMaterial({opacity:0.13}));
 ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; ground.position.y=-0.01; scene.add(ground);
+/* 작업 화면(배경·그리드)만 다크에 맞춘다 — 조명·재질은 그대로 둬서 내보내기 결과가 테마와 무관하게 일정하다 */
+function applySceneTheme(dark){
+  scene.background=new THREE.Color(dark?0x14171C:0xEEF1F4);
+  const ng=buildGrid(dark); scene.remove(grid); grid.geometry.dispose(); grid.material.dispose();
+  grid=ng; scene.add(grid);
+}
 
 const tcontrols=new TransformControls(camera,renderer.domElement); tcontrols.setSize(0.85);
 tcontrols.addEventListener('dragging-changed',e=>{ controls.enabled=!e.value; if(!e.value)pushHistory(); });
@@ -1563,6 +1586,23 @@ function resize(){const w=vp.clientWidth,h=vp.clientHeight;renderer.setSize(w,h,
 new ResizeObserver(resize).observe(vp); resize();
 function loop(){requestAnimationFrame(loop);controls.update();renderer.render(scene,camera);}
 loop();
+
+/* ============================ 다크 모드 ============================ */
+/* 사용자가 버튼으로 직접 고른 적이 없으면 OS 설정(prefers-color-scheme)을 그대로 따라간다 */
+const THEME_KEY='haeuso-theme';
+const sysDark=matchMedia('(prefers-color-scheme: dark)');
+function applyTheme(dark){
+  document.documentElement.setAttribute('data-theme',dark?'dark':'light');
+  const btn=document.getElementById('themeBtn'); if(btn)btn.innerHTML=icon(dark?'sun':'moon');
+  applySceneTheme(dark);
+}
+function setTheme(dark){ localStorage.setItem(THEME_KEY,dark?'dark':'light'); applyTheme(dark); }
+document.getElementById('themeBtn').onclick=()=>{
+  const dark=document.documentElement.getAttribute('data-theme')!=='dark';
+  setTheme(dark); toast(dark?'다크 모드':'라이트 모드'); };
+sysDark.addEventListener('change',e=>{ if(!localStorage.getItem(THEME_KEY))applyTheme(e.matches); });
+{ const saved=localStorage.getItem(THEME_KEY);
+  applyTheme(saved?saved==='dark':sysDark.matches); }
 
 /* ============================ 시작 데모 ============================ */
 renderOutliner(); renderInspector();
